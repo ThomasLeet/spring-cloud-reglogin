@@ -48,7 +48,6 @@
 # Docker 部署（docker compose）
 cd to root path of this profile  
 
-请先执行mvn clean package后根据环境执行一下命令
 mac m1 环境:    
 docker compose -f docker-compose-mac-m1.yml  up -d  
 
