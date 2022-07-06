@@ -45,7 +45,7 @@
 | Admin   | [API-DOC](https://github.com/ThomasLeet/spring-cloud-reglogin/blob/main/doc/Admin%20REST%20API.md) | [PDF](https://github.com/ThomasLeet/spring-cloud-reglogin/blob/main/doc/Admin%20REST%20API.pdf) |
 
 
-# docker 部署（docker compose）
+# Docker 部署（docker compose）
 cd to root path of this profile  
 
 请先执行mvn clean package后根据环境执行一下命令
