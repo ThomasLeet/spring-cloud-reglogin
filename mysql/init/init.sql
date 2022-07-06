@@ -1,0 +1,1 @@
+source /opt/sql/mysql_init.sql;

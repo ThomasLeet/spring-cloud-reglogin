@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.thomas.user.account.dao.UserAuthMapper" >
+  <resultMap id="BaseResultMap" type="com.thomas.user.account.model.UserAuth" >
+    <id column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="country_code" property="countryCode" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+    <result column="deleted" property="deleted" jdbcType="TINYINT" />
+    <result column="activated" property="activated" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    uid, email, country_code, phone, password, create_time, update_time, deleted, activated
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_auth
+    where uid = #{uid,jdbcType=BIGINT}
+  </select>
+  <select id="selectByPhone" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from user_auth
+    where country_code = #{countryCode,jdbcType=VARCHAR} and  phone = #{phone,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByEmail" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from user_auth
+    where email = #{email,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectUidByPhone" resultType="java.lang.Long"  >
+    select
+      uid
+    from user_auth
+    where country_code = #{countryCode,jdbcType=VARCHAR} and  phone = #{phone,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectUidByEmail" resultType="java.lang.Long" parameterType="java.lang.String">
+    select
+      uid
+    from user_auth
+    where email = #{email,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_auth
+    where uid = #{uid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.thomas.user.account.model.UserAuth" >
+    insert into user_auth (uid, email, country_code, 
+      phone, password, create_time, 
+      update_time, deleted, activated
+      )
+    values (#{uid,jdbcType=BIGINT}, #{email,jdbcType=VARCHAR}, #{countryCode,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=BIGINT}, #{deleted,jdbcType=TINYINT}, #{activated,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.thomas.user.account.model.UserAuth" >
+    insert into user_auth
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="countryCode != null" >
+        country_code,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+      <if test="activated != null" >
+        activated,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="countryCode != null" >
+        #{countryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=TINYINT},
+      </if>
+      <if test="activated != null" >
+        #{activated,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.thomas.user.account.model.UserAuth" >
+    update user_auth
+    <set >
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="countryCode != null" >
+        country_code = #{countryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=TINYINT},
+      </if>
+      <if test="activated != null" >
+        activated = #{activated,jdbcType=BIT},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.thomas.user.account.model.UserAuth" >
+    update user_auth
+    set email = #{email,jdbcType=VARCHAR},
+      country_code = #{countryCode,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      deleted = #{deleted,jdbcType=TINYINT},
+      activated = #{activated,jdbcType=BIT}
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,66 @@
+server:
+  port: 8081
+spring:
+  profiles:
+    active: dev
+  application:
+    name: account-service
+  jackson:
+    default-property-inclusion:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos:8848
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/USER?useSSL=false
+    username: root
+    password: 123456
+    druid:
+      initial-size: 1
+      max-active: 20
+      min-idle: 1
+      max-wait: 3000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      validation-query: select 1
+      validation-query-timeout: 3000
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 2000
+      min-evictable-idle-time-millis: 300000
+      max-evictable-idle-time-millis: 600000
+      filters: stat
+  mail:
+    host: smtp.163.com
+    username: thomas_lee007@163.com
+    password: FXTTQHLABEGRFZND
+    properties.mail.smtp.port: 994
+    from:  thomas_lee007@163.com
+    properties.mail.smtp.starttls.enable: true
+    properties.mail.smtp.starttls.required: true
+    properties.mail.smtp.ssl.enable: true
+    default-encoding: utf-8
+feign:
+  hystrix:
+    enabled: true
+  circuitbreaker:
+    enabled: true
+hystrix:
+  threadpool:
+    default:
+      coreSize: 8
+  command:
+    default:
+      circuitBreaker:
+        errorThresholdPercentage: 30
+        requestVolumeThreshold: 10
+        maxQueueSize: -1
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 600
+user:
+  header:
+    agent_type: account-service
+    token: 277bb9f3c6ff388b2052202be8a87e7d

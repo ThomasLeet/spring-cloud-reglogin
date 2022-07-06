@@ -1,0 +1,110 @@
+version: '3.7'
+
+services:
+  gateway:
+    build: ./gateway
+    image: gateway
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    ports:
+      - "8080:8080"
+    depends_on:
+      - nacos
+    networks:
+      - internal_net
+      - external_net
+  admin-gateway:
+    build: ./admin-gateway
+    image: admin-gateway
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    ports:
+      - "8085:8085"
+    depends_on:
+      - nacos
+    networks:
+      - internal_net
+      - external_net
+  account-service:
+    build: ./account-service
+    image: account-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    restart: on-failure
+    depends_on:
+      - profile-service
+      - mysql
+      - nacos
+    ports:
+      - "8081:8081"
+    networks:
+      - internal_net
+      - external_net
+  profile-service:
+    build: ./profile-service
+    image: profile-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    restart: on-failure
+    depends_on:
+      - mysql
+      - nacos
+    ports:
+      - "8082:8082"
+    networks:
+      - internal_net
+      - external_net
+  admin-service:
+    build: ./admin-service
+    image: admin-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    restart: on-failure
+    depends_on:
+      - account-service
+      - profile-service
+      - mysql
+      - nacos
+    ports:
+      - "8083:8083"
+    networks:
+      - internal_net
+      - external_net
+  mysql:
+    image: mysql/mysql-server:5.7
+    container_name: mysql
+    restart: always
+    build: ./mysql
+    environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_ROOT_PASSWORD=123456
+    volumes:
+      #- /data/mysql/data:/var/lib/mysql
+      - ./mysql/init:/docker-entrypoint-initdb.d/
+      - ./mysql/sql:/opt/sql
+    ports:
+      - '3306:3306'
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    networks:
+      - external_net
+  nacos:
+    image: zhusaidong/nacos-server-m1:2.0.3
+    container_name: nacos
+    restart: always
+    environment:
+      - MODE=standalone
+      - JVM_XMS=512m
+      - JVM_XMX=512m
+      - JVM_XMN=256m
+    ports:
+      - '8848:8848'
+    networks:
+        - external_net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8848"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+networks:
+  internal_net:
+  external_net:

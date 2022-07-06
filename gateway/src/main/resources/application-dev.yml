@@ -1,0 +1,30 @@
+server:
+  port: 8080
+spring:
+  profiles:
+    active: dev
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    gateway:
+      httpclient:
+        connect-timeout: 3000
+        response-timeout: 3000
+      routes:
+      - id: gateway-account
+        uri: lb://account-service:8081
+        predicates:
+        - Path=/v1/account/update,/v1/account/delete
+        filters:
+        - Auth=true
+      - id: gateway-account-other
+        uri: lb://account-service:8081
+        predicates:
+        - Path=/v1/account/**
+      - id: gateway-profile
+        uri: lb://profile-service:8082
+        predicates:
+        - Path=/v1/profile/**

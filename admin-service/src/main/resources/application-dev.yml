@@ -1,0 +1,55 @@
+server:
+  port: 8083
+spring:
+  profiles:
+    active: dev
+  application:
+    name: admin-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/ADMIN?useSSL=false
+    username: root
+    password: 123456
+    druid:
+      initial-size: 1
+      max-active: 20
+      min-idle: 1
+      max-wait: 3000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      validation-query: select 1
+      validation-query-timeout: 3000
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 2000
+      min-evictable-idle-time-millis: 300000
+      max-evictable-idle-time-millis: 600000
+      filters: stat
+    driver-class-name: com.mysql.jdbc.Driver
+feign:
+  circuitbreaker:
+    enabled: true
+  hystrix:
+    enabled: true
+hystrix:
+  threadpool:
+    default:
+      coreSize: 8
+  command:
+    default:
+      circuitBreaker:
+        errorThresholdPercentage: 30
+        requestVolumeThreshold: 10
+        maxQueueSize: -1
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 600
+user:
+  header:
+    agent_type: admin-service
+    token: 5094c05ccce67693238dfa125300b1a5

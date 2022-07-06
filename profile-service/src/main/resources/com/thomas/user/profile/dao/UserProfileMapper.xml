@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.thomas.user.profile.dao.UserProfileMapper" >
+  <resultMap id="BaseResultMap" type="com.thomas.user.profile.model.UserProfile" >
+    <id column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+    <result column="activated" property="activated" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    uid, icon, nickname, deleted, create_time, update_time, activated
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from user_profile
+    where uid = #{uid,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectUidByNickname"  parameterType="java.lang.String" >
+    select
+    uid
+    from user_profile
+    where nickname = #{nickname,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_profile
+    where uid = #{uid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.thomas.user.profile.model.UserProfile" >
+    insert into user_profile (uid, icon, nickname,
+                              deleted, create_time, update_time,
+                              activated)
+    values (#{uid,jdbcType=BIGINT}, #{icon,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR},
+            #{deleted,jdbcType=BIT}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT},
+            #{activated,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.thomas.user.profile.model.UserProfile" >
+    insert into user_profile
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+      <if test="nickname != null" >
+        nickname,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="activated != null" >
+        activated,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="activated != null" >
+        #{activated,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+
+  <insert id="insertOrUpdate" parameterType="com.thomas.user.profile.model.UserProfile" >
+    insert into user_profile
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+      <if test="nickname != null" >
+        nickname,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="activated != null" >
+        activated,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="activated != null" >
+        #{activated,jdbcType=BIT},
+      </if>
+    </trim>
+    <trim suffixOverrides="," >
+      on duplicate key update update_time=current_timestamp,
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="activated != null" >
+        activated = #{activated,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.thomas.user.profile.model.UserProfile" >
+    update user_profile
+    <set >
+      <if test="icon != null" >
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="activated != null" >
+        activated = #{activated,jdbcType=BIT},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.thomas.user.profile.model.UserProfile" >
+    update user_profile
+    set icon = #{icon,jdbcType=VARCHAR},
+        nickname = #{nickname,jdbcType=VARCHAR},
+        deleted = #{deleted,jdbcType=BIT},
+        create_time = #{createTime,jdbcType=BIGINT},
+        update_time = #{updateTime,jdbcType=BIGINT},
+        activated = #{activated,jdbcType=BIT}
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateStatusByUids">
+    update user_profile
+    set
+    deleted = #{deleted,jdbcType=TINYINT},
+    update_time = #{updateTime,jdbcType=BIGINT}
+    where uid IN
+    <foreach collection="uids" item="uid" index="index"
+             open="(" close=")" separator=",">
+            #{uid}
+    </foreach>
+  </update>
+</mapper>

@@ -1,0 +1,22 @@
+server:
+  port: 8085
+spring:
+  profiles:
+    active: dev
+  application:
+    name: admin-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos:8848
+    gateway:
+      httpclient:
+        connect-timeout: 3000
+        response-timeout: 3000
+      routes:
+      - id: gateway-admin
+        uri: lb://admin-service:8083
+        predicates:
+        - Path=/v1/admin/multiple-delete
+        filters:
+        - AdminAuth=true
