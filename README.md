@@ -64,10 +64,7 @@ docker pull mysql/mysql-server:5.7.38-1.2.8-server
 docker run --name mysql  --network internal_net --network external_net -p 3306:3306 -d -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_ROOT_HOST=% mysql/mysql-server:5.7.38-1.2.8-server  
 
 ### Create database and tables
-
-docker ps    
-docker cp 2020415.sql af491d5466ea:/tmp/mysql_init.sql    
-docker exec -it xxx bash -c "mysql -uroot -p123456 --default-character-set=utf8mb4 -e 'source /tmp/mysql_init.sql;'"  
+SQL脚本在 mysql/sql/mysql_init.sql
 
 ### Nacos
 
