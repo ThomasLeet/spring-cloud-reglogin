@@ -1,4 +1,4 @@
-# 系统架构
+# 系统架构设计
 
 采用srping cloud alibaba + gateway + nacos 架构，各服务代码、数据库解耦。内外网gateway独立部署。  
 
@@ -34,9 +34,18 @@
 
 ## 关于性能测试
 
-本机一般使用jmeter或则ab进行测试。本项目再本机运行受限于本机内存大小，使用默认JVM默认配置，也没有使用Cache固没有涉及性能测试部分。  
+本机一般使用jmeter或则ab进行测试。本项目再本机运行受限于本机内存大小，使用默认JVM默认配置，也没有使用Cache固没有涉及性能测试部分。 
 
-## docker 部署（docker compose）
+# 接口文档
+
+| 服务名  | ONLINE                                                       | PDF                                                          |
+| ------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Account | [API-DOC](https://github.com/ThomasLeet/spring-cloud-reglogin/blob/main/doc/Account%20REST%20API.md) | [PDF](https://github.com/ThomasLeet/spring-cloud-reglogin/blob/main/doc/Account%20REST%20API.pdf) |
+| Profile | [API-DOC](https://github.com/ThomasLeet/spring-cloud-reglogin/blob/main/doc/Profile%20REST%20API.md) | [PDF](https://github.com/ThomasLeet/spring-cloud-reglogin/blob/main/doc/Profile%20REST%20API.pdf) |
+| Admin   | [API-DOC](https://github.com/ThomasLeet/spring-cloud-reglogin/blob/main/doc/Admin%20REST%20API.md) | [PDF](https://github.com/ThomasLeet/spring-cloud-reglogin/blob/main/doc/Admin%20REST%20API.pdf) |
+
+
+# docker 部署（docker compose）
 cd to root path of this profile  
 
 请先执行mvn clean package后根据环境执行一下命令
@@ -47,10 +56,12 @@ other 环境:
 docker compose -f docker-compose.yml up -d   or   docker compose up -d
 
 ## 关于使用
-注册使用真实邮箱，如果收到不到邮件可以在account-service中看到日志中"The email" log的code（如有+号，code需要URLEncode）
-注册密码是8到20位的数字、英文字母和特殊字符
-登录后没有相关Cookie，请检查前后的域名是否一致。建议使用127.0.0.1 + 端口访问 
 
+注册使用真实邮箱，如果收到不到邮件可以在account-service中看到日志中"The email" log的code（如有+号，code需要URLEncode）。
+注册密码是8到20位的数字、英文字母和特殊字符。  
+登录后没有相关Cookie，请检查前后的域名是否一致。建议使用127.0.0.1 + 端口访问   
+
+# Other
 
 ## 本机docker自测环境
 
