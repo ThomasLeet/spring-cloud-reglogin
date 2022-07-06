@@ -5,7 +5,7 @@
 ### 默认环境1
 | 参数名 | 字段值 |
 | ------ | ------ |
-|baseUrl|http://localhost:8082|
+|baseUrl|http://127.0.0.1:8082|
 
 
 ## 2	Profile REST API
