@@ -57,7 +57,7 @@ docker compose -f docker-compose.yml up -d   or   docker compose up -d
 
 ## 关于使用
 
-注册使用真实邮箱，如果收到不到邮件可以在account-service中看到日志中"The email" log的code（如有+号，code需要URLEncode）。
+注册使用真实邮箱，如果收到不到邮件可以在account-service中看到日志中"The email" log的code（如有+号，code需要URLEncode）。  
 注册密码是8到20位的数字、英文字母和特殊字符。  
 登录后没有相关Cookie，请检查前后的域名是否一致。建议使用127.0.0.1 + 端口访问   
 
